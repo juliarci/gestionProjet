@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: html vers GitHub Pages
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  cicd:
+    runs-on: ubuntu-latest
+    steps:
+  # This workflow contains a single job called "build"
+  #build:
+    # The type of runner that the job will run on
+    #runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+      - name: vérif
+        uses: actions/checkout@v3
+      - name: continous
+        run: echo 'workflow lancé'
+       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: integration
+     #- name: installation nginx
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+          # Runs a set of commands using the runners shell
+          #run: |
+          # echo 'shell ubuntu : ls du dossier :'
+          ls -a
+          
+ 
+      - name: test
+        run: (test -f index.html && echo 'index présent') || echo 'index manquant'
+
+      - name: CD
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: main # The branch the action should deploy to.
+          folder: . # The folder the action should deploy.
